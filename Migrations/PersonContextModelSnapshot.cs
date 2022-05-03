@@ -50,15 +50,14 @@ namespace test_case.Migrations
                     b.Property<long>("SkillId")
                         .HasColumnType("bigint");
 
-                    b.Property<string>("level")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<byte>("level")
+                        .HasColumnType("tinyint");
 
                     b.HasKey("PersonId", "SkillId");
 
                     b.HasIndex("SkillId");
 
-                    b.ToTable("PersonSkill");
+                    b.ToTable("PersonSkills");
                 });
 
             modelBuilder.Entity("test_case.Models.Skill", b =>

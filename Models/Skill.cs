@@ -6,6 +6,7 @@
 
         public string Name { get; set; }
 
-        public ICollection<PersonSkill>? PersonSkills { get; set; }
+        public virtual ICollection<PersonSkill> PersonSkills { get; set; }
+
     }
 }

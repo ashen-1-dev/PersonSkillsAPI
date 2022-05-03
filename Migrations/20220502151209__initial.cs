@@ -36,24 +36,24 @@ namespace test_case.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "PersonSkill",
+                name: "PersonSkills",
                 columns: table => new
                 {
                     PersonId = table.Column<long>(type: "bigint", nullable: false),
                     SkillId = table.Column<long>(type: "bigint", nullable: false),
-                    level = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    level = table.Column<byte>(type: "tinyint", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PersonSkill", x => new { x.PersonId, x.SkillId });
+                    table.PrimaryKey("PK_PersonSkills", x => new { x.PersonId, x.SkillId });
                     table.ForeignKey(
-                        name: "FK_PersonSkill_Persons_PersonId",
+                        name: "FK_PersonSkills_Persons_PersonId",
                         column: x => x.PersonId,
                         principalTable: "Persons",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_PersonSkill_Skills_SkillId",
+                        name: "FK_PersonSkills_Skills_SkillId",
                         column: x => x.SkillId,
                         principalTable: "Skills",
                         principalColumn: "Id",
@@ -61,15 +61,15 @@ namespace test_case.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_PersonSkill_SkillId",
-                table: "PersonSkill",
+                name: "IX_PersonSkills_SkillId",
+                table: "PersonSkills",
                 column: "SkillId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "PersonSkill");
+                name: "PersonSkills");
 
             migrationBuilder.DropTable(
                 name: "Persons");

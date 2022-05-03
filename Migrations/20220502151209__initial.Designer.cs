@@ -11,7 +11,7 @@ using test_case.database;
 namespace test_case.Migrations
 {
     [DbContext(typeof(PersonContext))]
-    [Migration("20220423155059__initial")]
+    [Migration("20220502151209__initial")]
     partial class _initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -52,15 +52,14 @@ namespace test_case.Migrations
                     b.Property<long>("SkillId")
                         .HasColumnType("bigint");
 
-                    b.Property<string>("level")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<byte>("level")
+                        .HasColumnType("tinyint");
 
                     b.HasKey("PersonId", "SkillId");
 
                     b.HasIndex("SkillId");
 
-                    b.ToTable("PersonSkill");
+                    b.ToTable("PersonSkills");
                 });
 
             modelBuilder.Entity("test_case.Models.Skill", b =>

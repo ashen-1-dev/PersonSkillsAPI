@@ -5,11 +5,11 @@ namespace test_case.Models
     public class PersonSkill
     {
         public long PersonId { get; set; }
-        public Person Person { get; set; }
+        public virtual Person Person { get; set; }
         public long SkillId { get; set; }
-        public Skill Skill {get; set; }
+        public virtual Skill Skill {get; set; }
 
-        public string level { get; set; }
+        public byte level { get; set; }
 
     }
 }
