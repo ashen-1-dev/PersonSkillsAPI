@@ -29,11 +29,11 @@ namespace test_case.Controllers
             }));
         }
 
-        // GET api/v1/person/5
+        // GET api/v1/person/{id}
         [HttpGet("{id}")]
         public ActionResult Get(long id)
         {
-            return Ok(_db.Persons.Where(p => p.Id == id ).Select(p => new
+            var person = Ok(_db.Persons.Where(p => p.Id == id).Select(p => new
             {
                 p.Id,
                 p.Name,
@@ -44,6 +44,9 @@ namespace test_case.Controllers
                     ps.Level
                 })
             }));
+            if (person == null)
+                return NotFound("person not found");
+            return person;
         }
 
         // POST api/v1/person
@@ -66,14 +69,14 @@ namespace test_case.Controllers
         }
 
 
-        //PUT api/v1/person/5
+        //PUT api/v1/person/{id}
         // TODO: Если добавить уже существующий у сотрудника навык выдаст ошибку
         [HttpPut("{id}")]
         public ActionResult Put(long id, [FromBody] Person person)
         {
             var personToUpdate = _db.Persons.Find(id);
             if(personToUpdate == null)
-                BadRequest("person not found");
+                NotFound("person not found");
 
             personToUpdate.Name = person.Name;
             personToUpdate.DisplayName = person.DisplayName;
@@ -92,7 +95,7 @@ namespace test_case.Controllers
             }));
         }
 
-        // DELETE api/v1/person/5
+        // DELETE api/v1/person/{id}
         [HttpDelete("{id}")]
         public ActionResult Delete(long id)
         {
