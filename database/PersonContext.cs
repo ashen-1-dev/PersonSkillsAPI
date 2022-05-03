@@ -21,7 +21,16 @@ namespace test_case.database
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<PersonSkill>().HasKey(ps => new {ps.PersonId, ps.SkillId});
+            modelBuilder.Entity<PersonSkill>(ps =>
+            {
+                ps.Property(ps => ps.level)
+                    .HasDefaultValue(1);
+                ps.HasKey(ps => new { ps.PersonId, ps.SkillId });
+            });
+                
+            modelBuilder.Entity<Skill>()
+                .HasIndex(s => s.Name)
+                .IsUnique();
         }
     }
 }

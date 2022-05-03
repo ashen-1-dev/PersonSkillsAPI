@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using test_case.database;
 using test_case.Models;
 
@@ -7,6 +6,7 @@ using test_case.Models;
 namespace test_case.Controllers
 {
     [Route("api/v1/[controller]")]
+    [ApiController]
     public class PersonController : ControllerBase
     {
         private readonly PersonContext db = new PersonContext();
@@ -16,21 +16,6 @@ namespace test_case.Controllers
         [Route("~/api/v1/persons")]
         public dynamic Get()
         {
-            //var person = new Person { Name = "John", DisplayName = "Jo" };
-            //db.Persons.Add(person);
-            //db.SaveChanges();
-
-            //var skill = new Skill { Name = "Смышленный" };
-            //var skill2 = new Skill { Name = "Находчивый" };
-            //db.Skills.Add(skill);
-            //db.Skills.Add(skill2);
-            //db.SaveChanges();
-
-            //var PersonSkill = new PersonSkill { PersonId = person.Id, SkillId = skill.Id, level = 5 };
-            //var PersonSkill2 = new PersonSkill { PersonId = person.Id, SkillId = skill2.Id, level = 3 };
-            //db.PersonSkills.Add(PersonSkill);
-            //db.PersonSkills.Add(PersonSkill2);
-            //db.SaveChanges();
             return Ok(db.Persons.Select(p => new
             {
                 p.Id,
@@ -67,7 +52,17 @@ namespace test_case.Controllers
         {
             db.Persons.Add(person);
             db.SaveChanges();
-            return Ok("person created");
+            return Ok(db.Persons.Where(p => p.Id == person.Id).Select(p => new
+            {
+                p.Id,
+                p.Name,
+                p.DisplayName,
+                Skills = p.PersonSkills.Select(ps => new
+                {
+                    ps.Skill.Name,
+                    ps.level
+                })
+            }));
         }
 
 

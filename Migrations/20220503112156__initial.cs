@@ -28,7 +28,7 @@ namespace test_case.Migrations
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -41,7 +41,7 @@ namespace test_case.Migrations
                 {
                     PersonId = table.Column<long>(type: "bigint", nullable: false),
                     SkillId = table.Column<long>(type: "bigint", nullable: false),
-                    level = table.Column<byte>(type: "tinyint", nullable: false)
+                    level = table.Column<byte>(type: "tinyint", nullable: false, defaultValue: (byte)1)
                 },
                 constraints: table =>
                 {
@@ -64,6 +64,12 @@ namespace test_case.Migrations
                 name: "IX_PersonSkills_SkillId",
                 table: "PersonSkills",
                 column: "SkillId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Skills_Name",
+                table: "Skills",
+                column: "Name",
+                unique: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

@@ -10,7 +10,7 @@ namespace test_case.Controllers.v1
     {
         private readonly PersonContext db = new PersonContext();
         [HttpPost]
-        public ActionResult<Skill> Post(Skill skill)
+        public ActionResult<Skill> Post([FromBody]Skill skill)
         {
             db.Skills.Add(skill);
             db.SaveChanges();

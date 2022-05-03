@@ -1,16 +1,18 @@
-﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace test_case.Models
 {
     public class Person
     {
-        [BindNever]
         public long Id { get; set; }
 
+        [Required]
         public string Name { get; set; }
 
         public string DisplayName { get; set; }
 
-        public virtual ICollection<PersonSkill> PersonSkills { get; set; }
+        [JsonPropertyName("skills") ]
+        public virtual ICollection<PersonSkill>? PersonSkills { get; set; }
     }
 }
