@@ -8,12 +8,12 @@ namespace test_case.Controllers.v1
     
     public class SkillController : ControllerBase
     {
-        private readonly PersonContext db = new PersonContext();
+        private readonly PersonContext _db = new PersonContext();
         [HttpPost]
         public ActionResult<Skill> Post([FromBody]Skill skill)
         {
-            db.Skills.Add(skill);
-            db.SaveChanges();
+            _db.Skills.Add(skill);
+            _db.SaveChanges();
             return Ok(skill);
         }
     }

@@ -9,7 +9,7 @@ namespace test_case.Models
         [Required]
         public string Name { get; set; }
 
-        public virtual ICollection<PersonSkill> PersonSkills { get; set; }
+        public virtual ICollection<PersonSkill>? PersonSkills { get; set; }
 
     }
 }

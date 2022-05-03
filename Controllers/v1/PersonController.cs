@@ -9,14 +9,14 @@ namespace test_case.Controllers
     [ApiController]
     public class PersonController : ControllerBase
     {
-        private readonly PersonContext db = new PersonContext();
+        private readonly PersonContext _db = new PersonContext();
 
         // GET: api/v1/persons
         [HttpGet]
         [Route("~/api/v1/persons")]
-        public dynamic Get()
+        public ActionResult Get()
         {
-            return Ok(db.Persons.Select(p => new
+            return Ok(_db.Persons.Select(p => new
             {
                 p.Id,
                 p.Name,
@@ -24,16 +24,16 @@ namespace test_case.Controllers
                 Skills = p.PersonSkills.Select(ps => new
                 {
                     ps.Skill.Name,
-                    ps.level
+                    ps.Level
                 })
             }));
         }
 
         // GET api/v1/person/5
         [HttpGet("{id}")]
-        public dynamic Get(long id)
+        public ActionResult Get(long id)
         {
-            return Ok(db.Persons.Where(p => p.Id == id ).Select(p => new
+            return Ok(_db.Persons.Where(p => p.Id == id ).Select(p => new
             {
                 p.Id,
                 p.Name,
@@ -41,7 +41,7 @@ namespace test_case.Controllers
                 Skills = p.PersonSkills.Select(ps => new
                 {
                     ps.Skill.Name,
-                    ps.level
+                    ps.Level
                 })
             }));
         }
@@ -50,9 +50,9 @@ namespace test_case.Controllers
         [HttpPost]
         public ActionResult Post([FromBody] Person person)
         {
-            db.Persons.Add(person);
-            db.SaveChanges();
-            return Ok(db.Persons.Where(p => p.Id == person.Id).Select(p => new
+            _db.Persons.Add(person);
+            _db.SaveChanges();
+            return Ok(_db.Persons.Where(p => p.Id == person.Id).Select(p => new
             {
                 p.Id,
                 p.Name,
@@ -60,7 +60,7 @@ namespace test_case.Controllers
                 Skills = p.PersonSkills.Select(ps => new
                 {
                     ps.Skill.Name,
-                    ps.level
+                    ps.Level
                 })
             }));
         }
@@ -71,15 +71,15 @@ namespace test_case.Controllers
         [HttpPut("{id}")]
         public ActionResult Put(long id, [FromBody] Person person)
         {
-            var personToUpdate = db.Persons.Find(id);
+            var personToUpdate = _db.Persons.Find(id);
             if(personToUpdate == null)
                 BadRequest("person not found");
 
             personToUpdate.Name = person.Name;
             personToUpdate.DisplayName = person.DisplayName;
             personToUpdate.PersonSkills = person.PersonSkills;
-            db.SaveChanges();
-            return Ok(db.Persons.Where(p => p.Id == id).Select(p => new
+            _db.SaveChanges();
+            return Ok(_db.Persons.Where(p => p.Id == id).Select(p => new
             {
                 p.Id,
                 p.Name,
@@ -87,7 +87,7 @@ namespace test_case.Controllers
                 Skills = p.PersonSkills.Select(ps => new
                 {
                     ps.Skill.Name,
-                    ps.level
+                    ps.Level
                 })
             }));
         }
@@ -96,10 +96,10 @@ namespace test_case.Controllers
         [HttpDelete("{id}")]
         public ActionResult Delete(long id)
         {
-            var person = db.Persons.Find(id);
+            var person = _db.Persons.Find(id);
             if (person == null)
                 return NotFound("person not found");
-            db.Persons.Remove(person);
+            _db.Persons.Remove(person);
             return Ok("this person was deleted");
         }
     }

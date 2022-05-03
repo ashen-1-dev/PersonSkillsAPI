@@ -9,7 +9,7 @@ namespace test_case.Models
         public long SkillId { get; set; }
         public virtual Skill? Skill {get; set; }
         [Range(1, 10)]
-        public byte level { get; set; }
+        public byte Level { get; set; }
 
     }
 }

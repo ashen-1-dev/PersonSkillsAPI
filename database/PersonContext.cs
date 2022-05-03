@@ -16,6 +16,7 @@ namespace test_case.database
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+            // Не использовать строку подключение напрямую
             optionsBuilder.UseSqlServer(@"Data Source = (localdb)\MSSQLLocalDB; Initial Catalog = PersonDatabase; Integrated Security = True; Connect Timeout = 30; Encrypt = False; TrustServerCertificate = False; ApplicationIntent = ReadWrite; MultiSubnetFailover = False");
         }
 
@@ -23,7 +24,7 @@ namespace test_case.database
         {
             modelBuilder.Entity<PersonSkill>(ps =>
             {
-                ps.Property(ps => ps.level)
+                ps.Property(ps => ps.Level)
                     .HasDefaultValue(1);
                 ps.HasKey(ps => new { ps.PersonId, ps.SkillId });
             });
